@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Orbit Market</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6fb;--sf:#fff;--ink:#12163a;--mut:#5d6385;--ac:#5b3df5;--acx:#fff;--ac2:#ff7a45;--ok:#0e8f6e;--ln:#e1e5f2;--sh:0 8px 30px rgba(20,24,70,.08);color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1226;--sf:#181c3a;--ink:#eef0ff;--mut:#a3a9d0;--ac:#9a87ff;--acx:#12163a;--ok:#3ddbb0;--ln:#2a2f57;--sh:0 8px 30px rgba(0,0,0,.35);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1226;--sf:#181c3a;--ink:#eef0ff;--mut:#a3a9d0;--ac:#9a87ff;--acx:#12163a;--ok:#3ddbb0;--ln:#2a2f57;--sh:0 8px 30px rgba(0,0,0,.35);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:400 16px/1.5 "DM Sans",system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--sf);z-index:30}
+h1,h2,h3,.logo{font-family:"Bricolage Grotesque","DM Sans",sans-serif;margin:0;letter-spacing:-.02em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--sf);border-bottom:1px solid var(--ln)}
+.bar{max-width:1180px;margin:auto;padding:12px 20px;display:flex;gap:14px;align-items:center}
+.logo{font-size:1.5rem;font-weight:800;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.logo i{width:26px;height:26px;border-radius:50%;background:conic-gradient(var(--ac),var(--ac2),var(--ac));display:inline-block;position:relative}
+.logo i::after{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--sf)}
+.search{flex:1;min-width:0}
+.search input{width:100%;padding:11px 16px;border-radius:999px;border:1px solid var(--ln);background:var(--bg);color:var(--ink);font:inherit}
+.ib{position:relative;background:var(--bg);border:1px solid var(--ln);border-radius:12px;width:44px;height:44px;font-size:1.15rem;flex:none}
+.ib b{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;border-radius:10px;background:var(--ac2);color:#fff;font-size:.72rem;display:grid;place-items:center;padding:0 5px}
+.ib b:empty{display:none}
+main{max-width:1180px;margin:auto;padding:0 20px 60px}
+.hero{margin:24px 0;border-radius:28px;padding:48px 44px;background:linear-gradient(120deg,#2b1fa8,#5b3df5 55%,#ff7a45);color:#fff;display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;overflow:hidden}
+.hero h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:800;line-height:1.05}
+.hero p{max-width:46ch;opacity:.92;margin:14px 0 22px}
+.btn{border:0;border-radius:12px;padding:12px 20px;font-weight:700;background:var(--ac);color:var(--acx)}
+.btn.w{background:#fff;color:#2b1fa8}
+.btn.g{background:transparent;border:1px solid var(--ln);color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.stack{display:flex;justify-content:center;gap:0}
+.stack span{font-size:3.4rem;width:100px;height:130px;border-radius:22px;background:rgba(255,255,255,.18);backdrop-filter:blur(6px);display:grid;place-items:center;margin-left:-18px;border:1px solid rgba(255,255,255,.35)}
+.stack span:nth-child(2){transform:translateY(-16px)}.stack span:nth-child(3){transform:translateY(10px)}
+.perks{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+.perks div{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:14px 16px;font-size:.92rem;color:var(--mut)}
+.perks b{display:block;color:var(--ink)}
+.tool{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:18px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.chip{border:1px solid var(--ln);background:var(--sf);border-radius:999px;padding:8px 16px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--ac);color:var(--acx);border-color:var(--ac)}
+.tool select,.tool label{font:inherit;color:var(--ink)}
+select,.f input{background:var(--sf);color:var(--ink);border:1px solid var(--ln);border-radius:10px;padding:9px 12px;font:inherit}
+.rng{display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--mut)}
+.rng input{accent-color:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:20px}
+.card{position:relative;background:var(--sf);border:1px solid var(--ln);border-radius:20px;overflow:hidden;box-shadow:var(--sh);display:flex;flex-direction:column}
+.tile{height:170px;display:grid;place-items:center;font-size:4.4rem;position:relative;border:0;width:100%;cursor:pointer}
+.badge{position:absolute;left:12px;top:12px;background:var(--ac2);color:#fff;font:700 .75rem "DM Sans";padding:3px 10px;border-radius:999px}
+.heart{position:absolute;right:10px;top:10px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:#c2255c;font-size:1.1rem}
+.info{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.info h3{font-size:1.05rem;font-weight:600}
+.meta{font-size:.85rem;color:var(--mut)}
+.star{color:#f5a623}
+.price{font-weight:700;font-size:1.15rem}.price s{color:var(--mut);font-weight:400;font-size:.9rem;margin-left:6px}
+.info .btn{margin-top:auto}
+.empty{grid-column:1/-1;text-align:center;padding:60px 0;color:var(--mut)}
+footer{border-top:1px solid var(--ln);padding:26px 20px;text-align:center;color:var(--mut);font-size:.9rem}
+.scrim{position:fixed;inset:0;background:rgba(10,12,40,.55);z-index:40;display:none}
+.scrim.on{display:block}
+.dr{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--sf);z-index:50;transform:translateX(105%);transition:transform .25s;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.dr.on{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--ln)}
+.dh h2{font-size:1.3rem}
+.x{background:none;border:0;font-size:1.6rem;line-height:1}
+.items{flex:1;overflow:auto;padding:12px 20px}
+.it{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--ln)}
+.it .th{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;font-size:1.8rem}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--ln);border-radius:10px;margin-top:4px}
+.qty button{background:none;border:0;width:30px;height:28px;font-size:1.1rem}
+.qty span{min-width:24px;text-align:center}
+.rm{background:none;border:0;color:var(--mut);font-size:.8rem;text-decoration:underline}
+.sum{padding:16px 20px;border-top:1px solid var(--ln);display:grid;gap:8px}
+.row{display:flex;justify-content:space-between}.row.t{font-weight:700;font-size:1.15rem}
+.prog{height:8px;background:var(--bg);border-radius:6px;overflow:hidden}.prog i{display:block;height:100%;background:var(--ok);transition:width .3s}
+.promo{display:flex;gap:8px}.promo input{flex:1;background:var(--bg);color:var(--ink);border:1px solid var(--ln);border-radius:10px;padding:9px 12px;font:inherit}
+.modal{position:fixed;z-index:60;inset:0;display:none;align-items:center;justify-content:center;padding:16px}
+.modal.on{display:flex}
+.mb{background:var(--sf);border-radius:24px;width:min(720px,100%);max-height:90vh;overflow:auto;position:relative}
+.qv{display:grid;grid-template-columns:1fr 1fr}
+.qv .tile{height:100%;min-height:260px;font-size:7rem;cursor:default}
+.qv .info{padding:28px;gap:10px}
+.mb .x{position:absolute;right:14px;top:10px;z-index:2}
+.f{padding:28px;display:grid;gap:12px}
+.f label{display:grid;gap:4px;font-size:.9rem;color:var(--mut)}
+.f .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f small{color:#d6336c;min-height:1em}
+.ok{padding:44px 28px;text-align:center;display:grid;gap:10px;justify-items:center}
+.ok .big{font-size:3.4rem}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;opacity:0;transition:.25s;z-index:80;pointer-events:none}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:760px){.hero{grid-template-columns:1fr;padding:32px 24px}.stack{display:none}.perks{grid-template-columns:1fr}.qv{grid-template-columns:1fr}.search{order:5;flex-basis:100%}.bar{flex-wrap:wrap}.f .two{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+<div class="logo"><i></i>Orbit Market</div>
+<div class="search"><input id="q" type="search" placeholder="Search headphones, lamps, sneakers…" aria-label="Search products"></div>
+<button class="ib" data-a="wishview" aria-label="Show wishlist" title="Wishlist">♡<b id="wc"></b></button>
+<button class="ib" data-a="theme" aria-label="Toggle dark mode" title="Theme">◐</button>
+<button class="ib" data-a="cart" aria-label="Open cart" title="Cart">🛒<b id="cc"></b></button>
+</div></header>
+<main>
+<section class="hero">
+<div><h1>Gear up for the season with picks worth keeping.</h1><p>Sixteen hand-picked favorites across tech, home, style and fitness. Free shipping on orders over $75.</p>
+<button class="btn w" data-a="shop">Shop the collection</button></div>
+<div class="stack" aria-hidden="true"><span>🎧</span><span>⌚</span><span>👟</span></div>
+</section>
+<section class="perks"><div><b>Free shipping over $75</b>Delivered in 3–5 days</div><div><b>30-day returns</b>No questions asked</div><div><b>Try code SAVE10</b>10% off your cart</div></section>
+<section id="shop">
+<div class="tool"><div class="chips" id="chips"></div>
+<div class="rng"><label for="mx">Up to <b id="mv">$300</b></label><input id="mx" type="range" min="20" max="300" step="10" value="300"></div>
+<select id="so" aria-label="Sort products"><option value="feat">Featured</option><option value="lo">Price: low to high</option><option value="hi">Price: high to low</option><option value="rt">Top rated</option></select></div>
+<h2 id="ttl" style="margin-bottom:14px"></h2>
+<div class="grid" id="grid"></div>
+</section>
+</main>
+<footer>© 2026 Orbit Market · A demo store: no real payments are taken.</footer>
+<div class="scrim" id="sc" data-a="close"></div>
+<aside class="dr" id="dr" aria-label="Shopping cart"></aside>
+<div class="modal" id="md" role="dialog" aria-modal="true"><div class="mb" id="mb"></div></div>
+<div id="toast" role="status"></div>
+<script>
+const P=[
+[1,"Aura Wireless Headphones","Tech",129,179,4.7,412,"🎧",255,"Active noise cancelling, 40-hour battery and plush memory-foam cushions."],
+[2,"Pulse Smartwatch","Tech",199,249,4.5,288,"⌚",200,"Heart rate, sleep tracking and GPS in a slim, water-resistant case."],
+[3,"Echo Mini Speaker","Tech",59,0,4.4,530,"🔊",280,"Pocket-size Bluetooth speaker with surprisingly deep bass."],
+[4,"Lumen Desk Lamp","Home",45,60,4.6,198,"💡",45,"Dimmable LED lamp with three color temperatures and a USB port."],
+[5,"Terra Ceramic Mug Set","Home",32,0,4.8,342,"☕",20,"Set of four hand-glazed stoneware mugs, dishwasher safe."],
+[6,"Bloom Indoor Planter","Home",38,0,4.3,121,"🪴",140,"Self-watering planter that keeps your greens happy for weeks."],
+[7,"Nimbus Throw Blanket","Home",64,80,4.9,610,"🛋️",330,"Ultra-soft knit throw, machine washable and made to be shared."],
+[8,"Stride Running Sneakers","Style",110,0,4.6,477,"👟",8,"Lightweight cushioned runners with a breathable knit upper."],
+[9,"Drift Canvas Backpack","Style",72,95,4.5,256,"🎒",100,"Water-resistant 24L pack with a padded 15-inch laptop sleeve."],
+[10,"Solstice Sunglasses","Style",54,0,4.2,164,"🕶️",50,"Polarized lenses with UV400 protection in a classic frame."],
+[11,"Atlas Leather Wallet","Style",48,0,4.7,305,"👛",25,"Slim full-grain leather wallet with RFID-blocking lining."],
+[12,"Grip Yoga Mat","Fitness",36,0,4.6,389,"🧘",160,"6mm non-slip mat with alignment lines and a carry strap."],
+[13,"Flux Resistance Bands","Fitness",24,30,4.5,502,"💪",300,"Five-band set from light to heavy with door anchor and guide."],
+[14,"Summit Water Bottle","Fitness",28,0,4.8,720,"🧴",190,"Insulated steel bottle: 24 hours cold, 12 hours hot."],
+[15,"Volt Smart Scale","Fitness",42,0,4.1,97,"⚖️",120,"Syncs with your phone to track weight, BMI and body trends."],
+[16,"Zen Aroma Diffuser","Home",39,55,4.4,213,"🌿",170,"Whisper-quiet ultrasonic diffuser with a soft ambient glow."]
+].map(a=>({id:a[0],n:a[1],c:a[2],p:a[3],o:a[4],r:a[5],v:a[6],e:a[7],h:a[8],d:a[9]}));
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let cart=ld("om-cart",{}),wish=ld("om-wish",[]),promo=ld("om-promo",""),S={cat:"All",q:"",sort:"feat",max:300,wv:false};
+const $m=n=>"$"+n.toFixed(2),pid=id=>P.find(p=>p.id==id);
+const bg=p=>`background:linear-gradient(135deg,hsl(${p.h} 85% 90%),hsl(${p.h+40} 80% 78%))`;
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("on"),1800)}
+function save(){sv("om-cart",cart);sv("om-wish",wish);sv("om-promo",promo)}
+function totals(){let sub=0,n=0;for(const id in cart){sub+=pid(id).p*cart[id];n+=cart[id]}
+const disc=promo==="SAVE10"?sub*.1:0,ship=(sub-disc>=75||promo==="FREESHIP"||!n)?0:6.99;return{sub,n,disc,ship,tot:sub-disc+ship}}
+function list(){let l=P.filter(p=>(S.cat==="All"||p.c===S.cat)&&p.p<=S.max&&(p.n+p.c+p.d).toLowerCase().includes(S.q)&&(!S.wv||wish.includes(p.id)));
+if(S.sort==="lo")l.sort((a,b)=>a.p-b.p);if(S.sort==="hi")l.sort((a,b)=>b.p-a.p);if(S.sort==="rt")l.sort((a,b)=>b.r-a.r);return l}
+const stars=r=>`<span class="star" aria-label="${r} out of 5">★</span> ${r}`;
+function card(p){const w=wish.includes(p.id);return `<article class="card"><button class="tile" style="${bg(p)}" data-a="qv" data-i="${p.id}" aria-label="Quick view ${p.n}">${p.e}${p.o?`<span class="badge">-${Math.round(100-p.p/p.o*100)}%</span>`:""}</button>
+<button class="heart" data-a="wish" data-i="${p.id}" aria-pressed="${w}" aria-label="${w?"Remove from":"Add to"} wishlist" style="position:absolute;margin:0;top:10px;right:10px"></button>
+<div class="info"><div class="meta">${p.c}</div><h3>${p.n}</h3><div class="meta">${stars(p.r)} (${p.v})</div>
+<div class="price">${$m(p.p)}${p.o?`<s>${$m(p.o)}</s>`:""}</div><button class="btn" data-a="add" data-i="${p.id}">Add to cart</button></div></article>`}
+function render(){const l=list();$("#ttl").textContent=S.wv?"Your wishlist":(S.cat==="All"?"All products":S.cat)+` (${l.length})`;
+$("#grid").innerHTML=l.length?l.map(card).join(""):`<div class="empty"><div style="font-size:3rem">🔍</div><h3>${S.wv?"Your wishlist is empty":"No products match"}</h3><p>${S.wv?"Tap the heart on any product to save it here.":"Try another category, a higher price limit, or a different search."}</p></div>`;
+$$(".heart").forEach(h=>{const on=h.getAttribute("aria-pressed")==="true";h.textContent=on?"♥":"♡"});
+$("#chips").innerHTML=["All","Tech","Home","Style","Fitness"].map(c=>`<button class="chip" data-a="cat" data-i="${c}" aria-pressed="${S.cat===c}">${c}</button>`).join("");
+const t=totals();$("#cc").textContent=t.n||"";$("#wc").textContent=wish.length||"";save()}
+function drawer(){const t=totals(),ids=Object.keys(cart),left=Math.max(0,75-(t.sub-t.disc));
+$("#dr").innerHTML=`<div class="dh"><h2>Your cart (${t.n})</h2><button class="x" data-a="close" aria-label="Close cart">×</button></div>
+<div class="items">${ids.length?ids.map(id=>{const p=pid(id);return `<div class="it"><div class="th" style="${bg(p)}">${p.e}</div><div><b>${p.n}</b><div class="meta">${$m(p.p)}</div><div class="qty"><button data-a="dec" data-i="${id}" aria-label="Decrease">−</button><span>${cart[id]}</span><button data-a="inc" data-i="${id}" aria-label="Increase">+</button></div></div><div style="text-align:right"><b>${$m(p.p*cart[id])}</b><br><button class="rm" data-a="rm" data-i="${id}">Remove</button></div></div>`}).join(""):`<div class="empty"><div style="font-size:3rem">🛒</div><h3>Your cart is empty</h3><p>Add something you like and it will show up here.</p></div>`}</div>
+${ids.length?`<div class="sum"><div class="meta">${left>0&&promo!=="FREESHIP"?`Add ${$m(left)} more for free shipping`:"You’ve unlocked free shipping 🎉"}</div><div class="prog"><i style="width:${promo==="FREESHIP"?100:Math.min(100,(t.sub-t.disc)/75*100)}%"></i></div>
+<div class="promo"><input id="pc" placeholder="Promo code (try SAVE10)" value="${promo}" aria-label="Promo code"><button class="btn g" data-a="promo">Apply</button></div>
+<div class="row"><span>Subtotal</span><span>${$m(t.sub)}</span></div>${t.disc?`<div class="row" style="color:var(--ok)"><span>Discount</span><span>−${$m(t.disc)}</span></div>`:""}
+<div class="row"><span>Shipping</span><span>${t.ship?$m(t.ship):"Free"}</span></div><div class="row t"><span>Total</span><span>${$m(t.tot)}</span></div>
+<button class="btn" data-a="checkout">Checkout</button></div>`:""}`}
+function openDr(){drawer();$("#dr").classList.add("on");$("#sc").classList.add("on")}
+function closeAll(){$("#dr").classList.remove("on");$("#md").classList.remove("on");$("#sc").classList.remove("on")}
+function modal(h){$("#mb").innerHTML=h;$("#md").classList.add("on");$("#sc").classList.add("on")}
+function add(id,n=1){cart[id]=(cart[id]||0)+n;if(cart[id]<=0)delete cart[id];render();if($("#dr").classList.contains("on"))drawer()}
+function checkout(){const t=totals();modal(`<button class="x" data-a="close" aria-label="Close">×</button><form class="f" id="cf" novalidate><h2>Checkout · ${$m(t.tot)}</h2>
+<div class="two"><label>Full name<input name="n" autocomplete="name"><small></small></label><label>Email<input name="e" type="email" autocomplete="email"><small></small></label></div>
+<label>Shipping address<input name="a" autocomplete="street-address"><small></small></label>
+<div class="two"><label>City<input name="c"><small></small></label><label>ZIP code<input name="z" inputmode="numeric"><small></small></label></div>
+<div class="two"><label>Card number (demo only)<input name="k" inputmode="numeric" placeholder="4242 4242 4242 4242"><small></small></label><label>Expiry (MM/YY)<input name="x" placeholder="08/29"><small></small></label></div>
+<button class="btn" type="submit">Place order · ${$m(t.tot)}</button></form>`)}
+document.addEventListener("submit",e=>{if(e.target.id!=="cf")return;e.preventDefault();const f=e.target,v=n=>f[n].value.trim();
+const R={n:[v("n").length>1,"Enter your full name"],e:[/^\S+@\S+\.\S+$/.test(v("e")),"Enter a valid email"],a:[v("a").length>4,"Enter your street address"],c:[v("c").length>1,"Enter your city"],z:[/^\d{4,6}$/.test(v("z")),"Enter a 4–6 digit ZIP"],k:[/^\d{16}$/.test(v("k").replace(/\s/g,"")),"Enter a 16-digit card number"],x:[/^(0[1-9]|1[0-2])\/\d\d$/.test(v("x")),"Use MM/YY"]};
+let ok=true;for(const k in R){f[k].nextElementSibling.textContent=R[k][0]?"":R[k][1];if(!R[k][0])ok=false}
+if(!ok)return;const t=totals(),id="OM-"+Math.random().toString(36).slice(2,8).toUpperCase();cart={};promo="";render();
+modal(`<div class="ok"><div class="big">🎉</div><h2>Thanks, ${v("n").split(" ")[0]}! Your order is confirmed.</h2><p class="meta">Order ${id} · ${$m(t.tot)}<br>A receipt is on its way to ${v("e")}. Estimated delivery in 3–5 days.</p><button class="btn" data-a="close">Keep shopping</button></div>`)});
+function qv(id){const p=pid(id);modal(`<button class="x" data-a="close" aria-label="Close">×</button><div class="qv"><div class="tile" style="${bg(p)}">${p.e}</div><div class="info"><div class="meta">${p.c}</div><h2>${p.n}</h2><div class="meta">${stars(p.r)} (${p.v} reviews)</div><p>${p.d}</p><div class="price" style="font-size:1.6rem">${$m(p.p)}${p.o?`<s>${$m(p.o)}</s>`:""}</div><button class="btn" data-a="add" data-i="${p.id}">Add to cart</button><button class="btn g" data-a="wish" data-i="${p.id}">${wish.includes(p.id)?"♥ Saved":"♡ Save for later"}</button></div></div>`)}
+const A={
+add(i){add(i);toast("Added to cart")},inc(i){add(i)},dec(i){add(i,-1)},rm(i){delete cart[i];render();drawer()},
+wish(i){i=+i;wish=wish.includes(i)?wish.filter(x=>x!==i):[...wish,i];render();if($("#md").classList.contains("on"))qv(i);toast(wish.includes(i)?"Saved to wishlist":"Removed from wishlist")},
+cat(i){S.cat=i;S.wv=false;render()},cart:openDr,close:closeAll,checkout,qv,
+shop(){document.getElementById("shop").scrollIntoView({behavior:"smooth"})},
+wishview(){S.wv=!S.wv;S.cat="All";render();A.shop()},
+theme(){const d=document.documentElement,dk=d.dataset.theme?d.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;d.dataset.theme=dk?"light":"dark"},
+promo(){const c=$("#pc").value.trim().toUpperCase();if(!c){promo=""}else if(["SAVE10","FREESHIP"].includes(c)){promo=c;toast("Code applied")}else{promo="";toast("That code isn’t valid")}render();drawer()}};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;if(b.classList.contains("scrim")&&e.target!==b)return;e.stopPropagation();A[b.dataset.a]?.(b.dataset.i)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAll()});
+$("#md").addEventListener("click",e=>{if(e.target.id==="md")closeAll()});
+$("#q").addEventListener("input",e=>{S.q=e.target.value.toLowerCase().trim();render()});
+$("#so").addEventListener("change",e=>{S.sort=e.target.value;render()});
+$("#mx").addEventListener("input",e=>{S.max=+e.target.value;$("#mv").textContent="$"+S.max;render()});
+document.addEventListener("input",e=>{if(e.target.closest("#cf"))e.target.nextElementSibling&&(e.target.nextElementSibling.textContent="")});
+render();
+</script>
+</body>
+</html>
